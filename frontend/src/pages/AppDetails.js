@@ -99,6 +99,11 @@ function AppDetails() {
   };
 
   const submitReview = async () => {
+    if (!isLoggedIn) {
+      alert("Please login to add a review.");
+      window.location.href = "/login";
+      return;
+    }
     try {
       await axios.post(
         `https://playstore-capstone.onrender.com/api/apps/${id}/review`,
