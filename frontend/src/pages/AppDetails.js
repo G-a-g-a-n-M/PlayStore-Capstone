@@ -22,7 +22,7 @@ function AppDetails() {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/apps/${id}/reviews`);
+        const res = await axios.get(`https://playstore-capstone.onrender.com/api/apps/${id}/reviews`);
         setReviews(res.data.reviews || []);
       } catch (err) {
         console.log(err);
@@ -33,7 +33,7 @@ function AppDetails() {
       try {
         if (!isLoggedIn) return;
         const res = await axios.get(
-          `http://localhost:5000/api/apps/${id}/installed`,
+          `https://playstore-capstone.onrender.com/api/apps/${id}/installed`,
           {
             headers: {
               Authorization: `Bearer ${token}`
@@ -101,7 +101,7 @@ function AppDetails() {
   const submitReview = async () => {
     try {
       await axios.post(
-        `http://localhost:5000/api/apps/${id}/review`,
+        `https://playstore-capstone.onrender.com/api/apps/${id}/review`,
         {
           rating,
           comment
@@ -115,7 +115,7 @@ function AppDetails() {
       setComment("");
       setRating(5);
       
-      const res = await axios.get(`http://localhost:5000/api/apps/${id}/reviews`);
+      const res = await axios.get(`https://playstore-capstone.onrender.com/api/apps/${id}/reviews`);
       setReviews(res.data.reviews || []);
     } catch (err) {
       console.log(err);

@@ -21,7 +21,7 @@ function AddApp() {
     try {
 
       await axios.post(
-        "http://localhost:5000/api/apps",
+        "https://playstore-capstone.onrender.com/api/apps",
         {
           name,
           description,

@@ -14,7 +14,7 @@ function MyApps() {
     const fetchApps = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:5000/api/apps/user/installed-apps",
+          "https://playstore-capstone.onrender.com/api/apps/user/installed-apps",
           {
             headers: {
               Authorization: `Bearer ${token}`

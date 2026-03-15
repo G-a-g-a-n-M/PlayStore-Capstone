@@ -20,7 +20,7 @@ function EditApp(){
     const fetchApp = async () => {
 
       const res = await axios.get(
-        `http://localhost:5000/api/apps/${id}`
+        `https://playstore-capstone.onrender.com/api/apps/${id}`
       );
 
       setName(res.data.name);
@@ -39,7 +39,7 @@ function EditApp(){
     e.preventDefault();
 
     await axios.put(
-      `http://localhost:5000/api/apps/${id}`,
+      `https://playstore-capstone.onrender.com/api/apps/${id}`,
       {
         name,
         description,

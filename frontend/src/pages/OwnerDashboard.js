@@ -42,7 +42,7 @@ function OwnerDashboard() {
   const fetchApps = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/apps/my-apps",
+        "https://playstore-capstone.onrender.com/api/apps/my-apps",
         {
           headers:{
             Authorization:`Bearer ${token}`
@@ -63,7 +63,7 @@ function OwnerDashboard() {
     if (!window.confirm("Are you sure you want to delete this app?")) return;
     try {
       await axios.delete(
-        `http://localhost:5000/api/apps/${id}`,
+        `https://playstore-capstone.onrender.com/api/apps/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -82,7 +82,7 @@ function OwnerDashboard() {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/apps/announce-update",
+        "https://playstore-capstone.onrender.com/api/apps/announce-update",
         {
           appId,
           version
@@ -103,7 +103,7 @@ function OwnerDashboard() {
   const toggleVisibility = async (app) => {
     try {
       await axios.patch(
-        `http://localhost:5000/api/apps/${app._id}/visibility`,
+        `https://playstore-capstone.onrender.com/api/apps/${app._id}/visibility`,
         {
           visibility:
             app.visibility === "public"
@@ -132,7 +132,7 @@ function OwnerDashboard() {
 
     if (!reviewsMap[appId]) {
       try {
-        const res = await axios.get(`http://localhost:5000/api/apps/${appId}/reviews`);
+        const res = await axios.get(`https://playstore-capstone.onrender.com/api/apps/${appId}/reviews`);
         setReviewsMap(prev => ({
           ...prev,
           [appId]: res.data.reviews || res.data

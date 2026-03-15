@@ -13,7 +13,7 @@ function Notifications(){
 
   try {
     const res = await axios.get(
-     "http://localhost:5000/api/notifications",
+     "https://playstore-capstone.onrender.com/api/notifications",
      {
       headers:{
        Authorization:`Bearer ${token}`
@@ -30,7 +30,7 @@ function Notifications(){
 
   const deleteNotification = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/notifications/${id}`, {
+      await axios.delete(`https://playstore-capstone.onrender.com/api/notifications/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
