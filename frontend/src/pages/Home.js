@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import API from "../services/api";
 import Navbar from "../components/Navbar";
 import AppCard from "../components/AppCard"; // Moved to be with other component imports
-import { Grid, Typography, Container, Tabs, Tab } from "@mui/material";
+import { Box, Typography, Container, Tabs, Tab } from "@mui/material";
 
 function Home() {
   const [apps, setApps] = useState([]);
@@ -99,18 +99,32 @@ function Home() {
         </Tabs>
 
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
-          <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
-            Play Store Apps
+          <Typography variant="h4" sx={{ 
+            fontWeight: '900', 
+            background: 'linear-gradient(45deg, #fff 30%, #aaa 90%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            letterSpacing: '-0.5px'
+          }}>
+            Explore Apps
           </Typography>
 
           <div style={{ display: "flex", alignItems: "center" }}>
-             <Typography sx={{ marginRight: 2 }}>Min Rating:</Typography>
+             <Typography sx={{ marginRight: 2, color: 'gray', display: { xs: 'none', sm: 'block' } }}>Filter by:</Typography>
              <select 
               value={minRating} 
               onChange={handleRatingChange}
-              style={{ padding: "8px", borderRadius: "5px", border: "1px solid #ccc", backgroundColor: "#fff", color: "#333" }}
+              style={{ 
+                padding: "8px 12px", 
+                borderRadius: "8px", 
+                border: "1px solid #333", 
+                backgroundColor: "#1e1e1e", 
+                color: "#fff",
+                outline: 'none',
+                cursor: 'pointer'
+              }}
              >
-                <option value={0}>All</option>
+                <option value={0}>All Ratings</option>
                 <option value={1}>1+ ⭐</option>
                 <option value={2}>2+ ⭐</option>
                 <option value={3}>3+ ⭐</option>
@@ -122,16 +136,23 @@ function Home() {
 
         {apps.length === 0 ? (
           <Typography variant="body1" sx={{ textAlign: 'center', mt: 5, color: 'gray' }}>
-            No apps found in this category.
+            No apps found matching your criteria.
           </Typography>
         ) : (
-          <Grid container spacing={3}>
+          <Box sx={{ 
+            display: "grid",
+            gridTemplateColumns: {
+              xs: "repeat(2, 1fr)", // 2 columns on mobile
+              sm: "repeat(auto-fill, minmax(180px, 1fr))", // Adaptive on larger
+              md: "repeat(auto-fill, minmax(200px, 1fr))"
+            },
+            gap: { xs: 2, sm: 3 },
+            pb: 4
+          }}>
             {apps.map((app) => (
-              <Grid size={{ xs: 12, sm: 6, md: 4 }} key={app._id}>
-                <AppCard app={app} />
-              </Grid>
+              <AppCard key={app._id} app={app} />
             ))}
-          </Grid>
+          </Box>
         )}
       </Container>
     </div>

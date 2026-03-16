@@ -13,19 +13,13 @@ import {
   Avatar, 
   Link as MuiLink,
   Grid,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  Select,
-  FormHelperText,
   Alert
 } from "@mui/material";
 import { 
   PersonAddOutlined as PersonAddIcon,
   Person as PersonIcon,
   Email as EmailIcon,
-  Lock as LockIcon,
-  SupervisorAccount as RoleIcon
+  Lock as LockIcon
 } from "@mui/icons-material";
 import { useState } from "react";
 
@@ -172,27 +166,6 @@ function Register() {
                           startAdornment: <LockIcon sx={{ color: 'action.active', mr: 1 }} />,
                         }}
                       />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <FormControl fullWidth error={touched.role && Boolean(errors.role)}>
-                        <InputLabel id="role-label">I am a...</InputLabel>
-                        <Select
-                          labelId="role-label"
-                          id="role"
-                          name="role"
-                          value={values.role}
-                          label="I am a..."
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          startAdornment={<RoleIcon sx={{ color: 'action.active', mr: 1, ml: 1 }} />}
-                        >
-                          <MenuItem value="user">User (Explorer)</MenuItem>
-                          <MenuItem value="owner">Owner (Developer)</MenuItem>
-                        </Select>
-                        {touched.role && errors.role && (
-                          <FormHelperText>{errors.role}</FormHelperText>
-                        )}
-                      </FormControl>
                     </Grid>
                   </Grid>
 

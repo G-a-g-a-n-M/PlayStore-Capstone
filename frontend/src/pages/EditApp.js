@@ -14,6 +14,7 @@ function EditApp(){
   const [description,setDescription] = useState("");
   const [genre,setGenre] = useState("");
   const [version,setVersion] = useState("");
+  const [imageUrl,setImageUrl] = useState("");
 
   useEffect(() => {
 
@@ -27,6 +28,7 @@ function EditApp(){
       setDescription(res.data.description);
       setGenre(res.data.genre);
       setVersion(res.data.version);
+      setImageUrl(res.data.imageUrl || "");
 
     };
 
@@ -44,7 +46,8 @@ function EditApp(){
         name,
         description,
         genre,
-        version
+        version,
+        imageUrl
       },
       {
         headers:{
@@ -69,6 +72,7 @@ function EditApp(){
         <input
           value={name}
           onChange={(e)=>setName(e.target.value)}
+          placeholder="App Name"
         />
 
         <br/><br/>
@@ -76,6 +80,15 @@ function EditApp(){
         <input
           value={description}
           onChange={(e)=>setDescription(e.target.value)}
+          placeholder="Description"
+        />
+
+        <br/><br/>
+
+        <input
+          value={imageUrl}
+          onChange={(e)=>setImageUrl(e.target.value)}
+          placeholder="Image URL (Unsplash)"
         />
 
         <br/><br/>
@@ -101,6 +114,7 @@ function EditApp(){
         <input
           value={version}
           onChange={(e)=>setVersion(e.target.value)}
+          placeholder="Version"
         />
 
         <br/><br/>

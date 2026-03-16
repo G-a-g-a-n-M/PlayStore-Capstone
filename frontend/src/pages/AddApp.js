@@ -10,6 +10,7 @@ function AddApp() {
   const [description,setDescription] = useState("");
   const [genre,setGenre] = useState("");
   const [version,setVersion] = useState("");
+  const [imageUrl,setImageUrl] = useState("");
 
   const { token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
@@ -26,7 +27,8 @@ function AddApp() {
           name,
           description,
           genre,
-          version
+          version,
+          imageUrl
         },
         {
           headers:{
@@ -66,6 +68,14 @@ function AddApp() {
           placeholder="Description"
           value={description}
           onChange={(e)=>setDescription(e.target.value)}
+        />
+
+        <br/><br/>
+
+        <input
+          placeholder="Image URL (Unsplash)"
+          value={imageUrl}
+          onChange={(e)=>setImageUrl(e.target.value)}
         />
 
         <br/><br/>

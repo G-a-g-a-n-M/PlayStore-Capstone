@@ -6,7 +6,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import BackButton from "../components/BackButton";
 
-import { Container, Typography, Button } from "@mui/material";
+import { Container, Typography, Button, Box } from "@mui/material";
 
 function AppDetails() {
 
@@ -137,49 +137,69 @@ function AppDetails() {
       <Container sx={{ marginTop: 3 }}>
         <BackButton />
 
-        <Typography variant="h4">
-          {app.name}
-        </Typography>
+        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 4, mb: 4, mt: 2 }}>
+          <Box
+            component="img"
+            src={app.imageUrl || "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?q=80&w=2070&auto=format&fit=crop"}
+            alt={app.name}
+            sx={{
+              width: { xs: '100%', md: 300 },
+              height: 300,
+              borderRadius: 4,
+              objectFit: 'cover',
+              boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
+            }}
+          />
+          <Box sx={{ flexGrow: 1 }}>
+            <Typography variant="h3" fontWeight="bold" gutterBottom>
+              {app.name}
+            </Typography>
 
-        <Typography variant="body1">
-          {app.description}
-        </Typography>
+            <Typography variant="h6" color="primary.main" gutterBottom>
+              {app.genre}
+            </Typography>
 
-        <Typography>
-          ⭐ {app.rating}
-        </Typography>
+            <Typography variant="body1" sx={{ color: 'text.secondary', mb: 3 }}>
+              {app.description}
+            </Typography>
 
-        <Typography>
-          Genre: {app.genre}
-        </Typography>
+            <Typography>
+              ⭐ {app.rating}
+            </Typography>
 
-        <Typography>
-          Version: {app.version}
-        </Typography>
+            <Typography>
+              Genre: {app.genre}
+            </Typography>
 
-        <Typography>
-          Downloads: {app.downloads || 0}
-        </Typography>
+            <Typography>
+              Version: {app.version}
+            </Typography>
 
-        {isLoggedIn ? (
-          <Button
-            variant="contained"
-            color={installed ? "error" : "success"}
-            sx={{ marginTop: 2 }}
-            onClick={installed ? uninstallApp : downloadApp}
-          >
-            {installed ? "Uninstall" : "Install"}
-          </Button>
-        ) : (
-          <Button
-            variant="contained"
-            color="secondary"
-            sx={{ marginTop: 2 }}
-            onClick={() => window.location.href="/login"}
-          >
-            Log in to Install
-          </Button>
-        )}
+            <Typography>
+              Downloads: {app.downloads || 0}
+            </Typography>
+
+            {isLoggedIn ? (
+              <Button
+                variant="contained"
+                color={installed ? "error" : "success"}
+                sx={{ marginTop: 2 }}
+                onClick={installed ? uninstallApp : downloadApp}
+              >
+                {installed ? "Uninstall" : "Install"}
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                color="secondary"
+                sx={{ marginTop: 2 }}
+                onClick={() => window.location.href="/login"}
+              >
+                Log in to Install
+              </Button>
+            )}
+          </Box>
+        </Box>
 
         <div style={{ marginTop: "40px" }}>
           <Typography variant="h5">Reviews</Typography>

@@ -7,7 +7,7 @@ exports.createApp = async (req, res) => {
 
     try {
 
-        const { name, description, genre, version, releaseDate } = req.body;
+        const { name, description, genre, version, releaseDate, imageUrl } = req.body;
 
         const app = new Application({
             name,
@@ -15,6 +15,7 @@ exports.createApp = async (req, res) => {
             genre,
             version,
             releaseDate,
+            imageUrl,
             ownerId: req.user.userId
         });
 
