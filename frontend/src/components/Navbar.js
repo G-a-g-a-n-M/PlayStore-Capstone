@@ -98,7 +98,10 @@ function Navbar({ onSearch }) {
             flexGrow: 1, 
             fontWeight: "bold", 
             color: theme.palette.mode === 'dark' ? '#fff' : 'primary.main', 
-            textDecoration: "none" 
+            textDecoration: "none",
+            whiteSpace: "nowrap",
+            mr: 1,
+            fontSize: { xs: '1.1rem', sm: '1.25rem' }
           }}
         >
           Play Store
@@ -112,8 +115,8 @@ function Navbar({ onSearch }) {
           sx={{
             background: theme.palette.mode === 'dark' ? "#333" : "#f1f1f1",
             borderRadius: 1,
-            marginRight: 2,
-            width: { xs: "150px", sm: "300px" },
+            marginRight: { xs: 1, sm: 2 },
+            width: { xs: "130px", sm: "300px" },
             "& .MuiOutlinedInput-root": {
               color: theme.palette.mode === 'dark' ? "white" : "black",
               "& fieldset": { borderColor: "transparent" },
@@ -130,20 +133,20 @@ function Navbar({ onSearch }) {
           }}
         />
 
-        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', gap: { xs: 0, sm: 1 }, alignItems: 'center' }}>
           {!isLoggedIn ? (
             <>
-              <Button color="primary" component={Link} to="/login">Login</Button>
-              <Button variant="contained" component={Link} to="/register">Register</Button>
+              <Button color="primary" component={Link} to="/login" sx={{ minWidth: 'auto', px: { xs: 1, sm: 2 } }}>Login</Button>
+              <Button variant="contained" component={Link} to="/register" sx={{ display: { xs: 'none', sm: 'block' } }}>Register</Button>
             </>
           ) : (
             <>
-              <Button color="inherit" component={Link} to="/installed-apps" sx={{ color: theme.palette.mode === 'dark' ? 'inherit' : 'text.primary' }}>My Apps</Button>
+              <Button color="inherit" component={Link} to="/installed-apps" sx={{ color: theme.palette.mode === 'dark' ? 'inherit' : 'text.primary', display: { xs: 'none', md: 'block' } }}>My Apps</Button>
               {role === "owner" && (
-                <Button color="inherit" component={Link} to="/owner/dashboard" sx={{ color: theme.palette.mode === 'dark' ? 'inherit' : 'text.primary' }}>Owner Dashboard</Button>
+                <Button color="inherit" component={Link} to="/owner/dashboard" sx={{ color: theme.palette.mode === 'dark' ? 'inherit' : 'text.primary', display: { xs: 'none', md: 'block' } }}>Owner Dashboard</Button>
               )}
               
-              <IconButton color="inherit" onClick={handleOpenNotifMenu} sx={{ color: theme.palette.mode === 'dark' ? 'inherit' : 'text.primary' }}>
+              <IconButton color="inherit" onClick={handleOpenNotifMenu} sx={{ color: theme.palette.mode === 'dark' ? 'inherit' : 'text.primary', p: { xs: 0.5, sm: 1 } }}>
                 <Badge badgeContent={notifications.length} color="error">
                   <NotificationsIcon />
                 </Badge>
@@ -190,7 +193,7 @@ function Navbar({ onSearch }) {
               </Menu>
 
               <Tooltip title="Account commands">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, ml: 1 }}>
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, ml: { xs: 0.5, sm: 1 } }}>
                   <Avatar sx={{ bgcolor: "#1976d2", width: 32, height: 32, fontSize: "0.9rem" }}>
                     {username ? username.charAt(0).toUpperCase() : "U"}
                   </Avatar>
@@ -219,12 +222,26 @@ function Navbar({ onSearch }) {
                   </Typography>
                 </MenuItem>
                 <Divider />
+                
                 <MenuItem onClick={handleCloseUserMenu} component={Link} to="/profile">
                   Profile
                 </MenuItem>
+                
+                {/* Mobile-only menu items that are hidden in the toolbar */}
+                <MenuItem onClick={handleCloseUserMenu} component={Link} to="/installed-apps" sx={{ display: { xs: 'block', md: 'none' } }}>
+                  My Apps
+                </MenuItem>
+                
+                {role === "owner" && (
+                  <MenuItem onClick={handleCloseUserMenu} component={Link} to="/owner/dashboard" sx={{ display: { xs: 'block', md: 'none' } }}>
+                    Owner Dashboard
+                  </MenuItem>
+                )}
+
                 <MenuItem onClick={handleToggleTheme}>
                   {theme.palette.mode === 'dark' ? '☀ Light Mode' : '🌙 Dark Mode'}
                 </MenuItem>
+                
                 <MenuItem onClick={handleLogout}>
                   Logout
                 </MenuItem>

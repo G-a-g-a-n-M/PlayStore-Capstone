@@ -51,5 +51,11 @@ exports.uninstallApp = async (userId, appId) => {
     appId
   });
 
+  const app = await Application.findById(appId);
+  if (app && app.downloads > 0) {
+    app.downloads -= 1;
+    await app.save();
+  }
+
   return { message: "App uninstalled successfully" };
 };

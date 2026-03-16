@@ -80,6 +80,9 @@ function Home() {
         <Tabs
           value={category}
           onChange={(e, val) => loadCategory(val)}
+          variant="scrollable"
+          scrollButtons="auto"
+          allowScrollButtonsMobile
           sx={{ 
             marginBottom: 3,
             "& .MuiTab-root": { color: "gray" },

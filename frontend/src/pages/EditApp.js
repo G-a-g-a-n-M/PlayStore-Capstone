@@ -3,6 +3,18 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import BackButton from "../components/BackButton";
+import { 
+  Container, 
+  Typography, 
+  TextField, 
+  Button, 
+  Paper, 
+  Box, 
+  FormControl, 
+  InputLabel, 
+  Select, 
+  MenuItem
+} from "@mui/material";
 
 function EditApp(){
 
@@ -15,120 +27,163 @@ function EditApp(){
   const [genre,setGenre] = useState("");
   const [version,setVersion] = useState("");
   const [imageUrl,setImageUrl] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
 
   useEffect(() => {
-
     const fetchApp = async () => {
-
-      const res = await axios.get(
-        `https://playstore-capstone.onrender.com/api/apps/${id}`
-      );
-
-      setName(res.data.name);
-      setDescription(res.data.description);
-      setGenre(res.data.genre);
-      setVersion(res.data.version);
-      setImageUrl(res.data.imageUrl || "");
-
+      try {
+        const res = await axios.get(
+          `https://playstore-capstone.onrender.com/api/apps/${id}`
+        );
+        setName(res.data.name);
+        setDescription(res.data.description);
+        setGenre(res.data.genre);
+        setVersion(res.data.version);
+        setImageUrl(res.data.imageUrl || "");
+      } catch (error) {
+        console.error("Error fetching app details:", error);
+      } finally {
+        setInitialLoading(false);
+      }
     };
-
     fetchApp();
-
   }, [id]);
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
+    setLoading(true);
 
-    await axios.put(
-      `https://playstore-capstone.onrender.com/api/apps/${id}`,
-      {
-        name,
-        description,
-        genre,
-        version,
-        imageUrl
-      },
-      {
-        headers:{
-          Authorization:`Bearer ${token}`
-        }
-      }
-    );
-
-    navigate("/owner/dashboard");
-
+    try {
+      await axios.put(
+        `https://playstore-capstone.onrender.com/api/apps/${id}`,
+        { name, description, genre, version, imageUrl },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      navigate("/owner/dashboard");
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
   };
 
+  if (initialLoading) {
+    return (
+      <Container maxWidth="sm" sx={{ mt: 5, textAlign: 'center' }}>
+        <Typography variant="h6">Loading app details...</Typography>
+      </Container>
+    );
+  }
+
   return (
-
-    <div style={{padding:"30px"}}>
+    <Container maxWidth="sm" sx={{ mt: 5, mb: 10 }}>
       <BackButton />
-
-      <h2>Edit App</h2>
-
-      <form onSubmit={handleSubmit}>
-
-        <input
-          value={name}
-          onChange={(e)=>setName(e.target.value)}
-          placeholder="App Name"
-        />
-
-        <br/><br/>
-
-        <input
-          value={description}
-          onChange={(e)=>setDescription(e.target.value)}
-          placeholder="Description"
-        />
-
-        <br/><br/>
-
-        <input
-          value={imageUrl}
-          onChange={(e)=>setImageUrl(e.target.value)}
-          placeholder="Image URL (Unsplash)"
-        />
-
-        <br/><br/>
-
-        <select
-          value={genre}
-          onChange={(e)=>setGenre(e.target.value)}
-          style={{ padding: "8px", width: "177px" }}
+      
+      <Paper 
+        elevation={24} 
+        sx={{ 
+          p: { xs: 3, md: 5 }, 
+          mt: 3,
+          backgroundColor: 'rgba(30, 30, 30, 0.7)',
+          backdropFilter: 'blur(10px)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          borderRadius: 4
+        }}
+      >
+        <Typography 
+          variant="h4" 
+          align="center" 
+          gutterBottom 
+          sx={{ 
+            fontWeight: 'bold',
+            background: 'linear-gradient(45deg, #primary-main 30%, #fff 90%)',
+            WebkitBackgroundClip: 'text',
+            mb: 4 
+          }}
         >
-          <option value="" disabled>Select Genre</option>
-          <option value="games">Games</option>
-          <option value="beauty">Beauty</option>
-          <option value="fashion">Fashion</option>
-          <option value="women">Women</option>
-          <option value="health">Health</option>
-          <option value="food">Food</option>
-          <option value="social">Social</option>
-          <option value="education">Education</option>
-        </select>
+          Edit App
+        </Typography>
 
-        <br/><br/>
+        <form onSubmit={handleSubmit}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+            
+            <TextField
+              required
+              fullWidth
+              label="App Name"
+              variant="outlined"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
 
-        <input
-          value={version}
-          onChange={(e)=>setVersion(e.target.value)}
-          placeholder="Version"
-        />
+            <TextField
+              required
+              fullWidth
+              label="Description"
+              variant="outlined"
+              multiline
+              rows={3}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
 
-        <br/><br/>
+            <TextField
+              fullWidth
+              label="Image URL (Unsplash)"
+              variant="outlined"
+              value={imageUrl}
+              onChange={(e) => setImageUrl(e.target.value)}
+              placeholder="https://images.unsplash.com/..."
+            />
 
-        <button type="submit">
-          Update App
-        </button>
+            <FormControl fullWidth required>
+              <InputLabel id="genre-label">Genre</InputLabel>
+              <Select
+                labelId="genre-label"
+                value={genre || ""}
+                label="Genre"
+                onChange={(e) => setGenre(e.target.value)}
+              >
+                <MenuItem value="games">Games</MenuItem>
+                <MenuItem value="beauty">Beauty</MenuItem>
+                <MenuItem value="fashion">Fashion</MenuItem>
+                <MenuItem value="women">Women</MenuItem>
+                <MenuItem value="health">Health</MenuItem>
+                <MenuItem value="food">Food</MenuItem>
+                <MenuItem value="social">Social</MenuItem>
+                <MenuItem value="education">Education</MenuItem>
+              </Select>
+            </FormControl>
 
-      </form>
+            <TextField
+              required
+              fullWidth
+              label="Version"
+              variant="outlined"
+              value={version}
+              onChange={(e) => setVersion(e.target.value)}
+              placeholder="1.0.0"
+            />
 
-    </div>
-
+            <Button 
+              type="submit" 
+              variant="contained" 
+              size="large"
+              disabled={loading}
+              sx={{ 
+                mt: 2, 
+                py: 1.5,
+                fontWeight: 'bold',
+                borderRadius: 2
+              }}
+            >
+              {loading ? "Updating..." : "Update App"}
+            </Button>
+          </Box>
+        </form>
+      </Paper>
+    </Container>
   );
-
 }
 
 export default EditApp;
