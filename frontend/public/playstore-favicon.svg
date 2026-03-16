@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+  <!-- A colorful triangle reminiscent of a play store logo -->
+  <polygon points="200,100 200,900 850,500" fill="#1e88e5" />
+  <polygon points="200,100 850,500 600,600" fill="#43a047" />
+  <polygon points="200,900 850,500 600,400" fill="#e53935" />
+  <polygon points="200,500 600,400 600,600" fill="#fdd835" />
+</svg>
